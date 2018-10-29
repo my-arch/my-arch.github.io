@@ -1,0 +1,293 @@
+<script type="text/javascript" src="/usr/share/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="style.css" />
+		<title>Base Installation</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<div class="topnav">
+		<a class="active" href="index.html">HOME</a>
+		<a href="#news">News</a>
+		<a href="#contact">Contact</a>
+		<a href="#about">About</a>
+	</div>
+	<body>
+		<div class="content">
+		
+<div id="Base Arch Linux Installation"><h1 id="Base Arch Linux Installation">Base Arch Linux Installation</h1></div>
+
+<ol>
+<li>
+Boot from USB (Choose legacy mode)
+
+<li>
+Set up internet connection
+
+<ul>
+<li>
+wifi-menu -o wlp2s0
+
+<li>
+dhcpcd wlp2s0
+
+<li>
+ping www.google.com
+
+</ul>
+<li>
+Update system clock
+
+<ul>
+<li>
+timedatectl set-ntp true
+
+</ul>
+<li>
+Partition hard drive
+
+<ul>
+<li>
+fdisk -l
+
+<li>
+cfdisk
+
+<li>
+mkfs.ext4 /dev/sda6
+
+<li>
+mkfs.ext4 /dev/sda7
+
+<li>
+mkswap /dev/sda5
+
+<li>
+swapon /dev/sda5
+
+<li>
+mount /dev/sda6 /mnt
+
+<li>
+mkdir /mnt/home
+
+<li>
+mount /dev/sda7 /mnt/home
+
+</ul>
+<li>
+Base system installation
+
+<ul>
+<li>
+pacstrap /mnt base base-devel
+
+</ul>
+<li>
+Create FSTAB file
+
+<ul>
+<li>
+genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+
+<li>
+cat /mnt/etc/fstab
+
+</ul>
+<li>
+Basic configuration
+
+<ul>
+<li>
+arch-chroot /mnt
+
+</ul>
+<li>
+Uncomment en_US.UTF-8 UTF-8 locale
+
+<ul>
+<li>
+vi /etc/locale.gen
+
+<li>
+locale-gen
+
+</ul>
+<li>
+Create locale.conf file
+
+<ul>
+<li>
+vi /etc/locale.conf
+
+<li>
+LANG=en_US.UTF-8
+
+</ul>
+<li>
+Timezone
+
+<ul>
+<li>
+ls /usr/share/zoneinfo/
+
+<li>
+ln -s /usr/share/zoneinfo/Asia/KualaLumpur /etc/localtime
+
+</ul>
+<li>
+Set time
+
+<ul>
+<li>
+hwclock --systohc --utc
+
+</ul>
+<li>
+Set root password
+
+<ul>
+<li>
+passwd
+
+</ul>
+<li>
+Network configuation
+
+<ul>
+<li>
+vi /etc/hostname
+
+<li>
+chew-pc
+
+<li>
+vi /etc/hosts
+
+<li>
+systemctl enable dhcpcd
+
+</ul>
+<li>
+Grub installation
+
+<ul>
+<li>
+pacman -S grub os-prober
+
+<li>
+grub-install /dev/sda
+
+<li>
+grub-mkconfig -o /boot/grub/grub.cfg
+
+</ul>
+<li>
+Install wifi utils
+
+<ul>
+<li>
+pacman -S iw wpa_supplicant dialog wpa_actiond
+
+<li>
+systemctl enable netctl-auto@interface_name.service
+
+</ul>
+<li>
+Restart system
+
+<ul>
+<li>
+exit
+
+<li>
+umount /mnt
+
+<li>
+umount /mnt/home
+
+<li>
+reboot
+
+</ul>
+<li>
+Add user
+
+<ul>
+<li>
+useradd -m -g users -G wheel,storage,power -s /bin/bash chew
+
+<li>
+passwd chew
+
+</ul>
+<li>
+Edit sudoers and uncomment %wheel ALL=(ALL) ALL
+
+<ul>
+<li>
+EDITOR=nano visudo
+
+</ul>
+<li>
+Install xserver
+
+<ul>
+<li>
+pacman -S xorg-server xorg-xinit
+
+</ul>
+<li>
+Install 3D support
+
+<ul>
+<li>
+pacman -S mesa
+
+</ul>
+<li>
+Intel drivers
+
+<ul>
+<li>
+sudo pacman -S xf86-video-intel intel-dri
+
+</ul>
+<li>
+If using laptop, install input driver
+
+<ul>
+<li>
+pacman -S xf86-input-synaptics
+
+</ul>
+<li>
+Network Manager
+
+<ul>
+<li>
+pacman -S networkmanager urxvt sddm i3
+
+</ul>
+<li>
+Create sddm login
+
+<ul>
+<li>
+systemctl enable sddm.service
+
+</ul>
+<li>
+Reinstall windows bootloader
+
+<ul>
+<li>
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+
+</ul>
+</ol>
+
+		</div>
+	</body>
+</html>

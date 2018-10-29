@@ -1,0 +1,124 @@
+<script type="text/javascript" src="/usr/share/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="style.css" />
+		<title>Convert Files</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<div class="topnav">
+		<a class="active" href="index.html">HOME</a>
+		<a href="#news">News</a>
+		<a href="#contact">Contact</a>
+		<a href="#about">About</a>
+	</div>
+	<body>
+		<div class="content">
+		
+<div id="Convert Files"><h1 id="Convert Files">Convert Files</h1></div>
+
+<div id="Convert Files-Manipulation of PDF Files"><h2 id="Manipulation of PDF Files">Manipulation of PDF Files</h2></div>
+<ol>
+<li>
+Change quality of pdf file
+
+<ul>
+<li>
+gs -dNOPAUSE -dBATCH -dFirstPage=<em>FirstPage</em> -dLastPage=<em>LastPage</em> -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=setting -sOutputFile=<em>output</em>.pdf <em>input</em>.pdf
+
+<li>
+change "setting" to
+
+<ul>
+<li>
+/screen
+
+<li>
+/ebook
+
+<li>
+/printer
+
+<li>
+/prepress
+
+</ul>
+</ul>
+</ol>
+
+<ol>
+<li>
+Merge/split pdf files
+
+<ul>
+<li>
+convert <em>input1</em>.pdf <em>input2</em>.pdf <em>output</em>.pdf
+
+<li>
+convert <em>input</em>.pdf[0-2] <em>output</em>.pdf
+
+</ul>
+</ol>
+
+<ol>
+<li>
+Merge using ghostscript
+
+<ul>
+<li>
+gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=<em>combine</em>.pdf -dBATCH <em>1</em>.pdf <em>2</em>.pdf
+
+</ul>
+</ol>
+
+<div id="Convert Files-Convert DJVU to PDF"><h2 id="Convert DJVU to PDF">Convert DJVU to PDF</h2></div>
+<ol>
+<li>
+DJVU manipulation
+
+<ul>
+<li>
+ddjvu --format=pdf <em>inputfile.djvu</em> <em>ouputfile.pdf</em>
+
+</ul>
+</ol>
+
+<div id="Convert Files-Convert PDF to JPEG"><h2 id="Convert PDF to JPEG">Convert PDF to JPEG</h2></div>
+<ol>
+<li>
+Convert file using libreoffice
+
+<ul>
+<li>
+libreoffice --headless --invisible --convert-to jpeg *.pdf
+
+</ul>
+</ol>
+
+<div id="Convert Files-Zip File/Folder"><h2 id="Zip File/Folder">Zip File/Folder</h2></div>
+<ol>
+<li>
+Zip folder
+
+<ul>
+<li>
+zip -er <em>Folder</em>.zip <em>Folder</em>
+
+</ul>
+</ol>
+		
+<ol>
+<li>
+Zip folder with password
+
+<ul>
+<li>
+zip -P <em>Password</em> -r <em>Folder</em>.zip <em>Folder</em>
+
+</ul>
+</ol>
+
+		</div>
+	</body>
+</html>

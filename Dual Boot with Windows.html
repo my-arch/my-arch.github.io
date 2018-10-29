@@ -1,0 +1,40 @@
+<script type="text/javascript" src="/usr/share/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="style.css" />
+		<title>Dual Boot with Windows</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<div class="topnav">
+		<a class="active" href="index.html">HOME</a>
+		<a href="#news">News</a>
+		<a href="#contact">Contact</a>
+		<a href="#about">About</a>
+	</div>
+	<body>
+		<div class="content">
+		
+<div id="Dual Boot with Windows"><h1 id="Dual Boot with Windows">Dual Boot with Windows</h1></div>
+
+<ol>
+<li>
+Reinstall windows bootloader
+
+<ul>
+<li>
+pacman -S grub os-prober
+
+<li>
+grub-install /dev/sda
+
+</ul>
+<li>
+grub-mkconfig -o /boot/grub/grub.cfg
+
+</ol>
+
+		</div>
+	</body>
+</html>

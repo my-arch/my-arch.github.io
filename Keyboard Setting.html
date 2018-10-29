@@ -1,0 +1,83 @@
+<script type="text/javascript" src="/usr/share/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="style.css" />
+		<title>Keyboard Setting</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<div class="topnav">
+		<a class="active" href="index.html">HOME</a>
+		<a href="#news">News</a>
+		<a href="#contact">Contact</a>
+		<a href="#about">About</a>
+	</div>
+	<body>
+		<div class="content">
+		
+<div id="Keyboard Setting"><h1 id="Keyboard Setting">Keyboard Setting</h1></div>
+
+<div id="Keyboard Setting-Keyboard Layout"><h2 id="Keyboard Layout">Keyboard Layout</h2></div>
+<ol>
+<li>
+To set keyboard layout to
+
+<ul>
+<li>
+Primary - US keyboard
+
+<li>
+Variant - Dvorak
+
+<li>
+Command - setxkbmap -layout us,us -variant ,dvorak -option grp:alt_shift_toggle
+
+</ul>
+</ol>
+
+<div id="Keyboard Setting-Keyboard Key Setting"><h2 id="Keyboard Key Setting">Keyboard Key Setting</h2></div>
+<ol>
+<li>
+To swap key
+
+<ul>
+<li>
+Install xmodmap
+
+<li>
+Create xmodmap config file - <em>touch ~/.Xmodmap</em>
+
+<li>
+To reload, run: <em>xmodmap ~/.Xmodmap</em>
+
+</ul>
+<li>
+To read keycode
+
+<ul>
+<li>
+Install xbindkeys
+
+<li>
+To read keycode, run: <em>xbindkeys -k</em>
+
+<li>
+To reload, run: <em>xbindkeys -p</em>
+
+</ul>
+</ol>
+
+<div id="Keyboard Setting-Keyboard Setting Files"><h2 id="Keyboard Setting Files">Keyboard Setting Files</h2></div>
+<ol>
+<li>
+<a href="/home/chew/.Xmodmap">Xmodmap</a>
+
+<li>
+<a href="/home/chew/.bash_aliases">Bash alias to swap keyboard</a>
+
+</ol>
+
+		</div>
+	</body>
+</html>

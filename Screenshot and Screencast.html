@@ -1,0 +1,88 @@
+<script type="text/javascript" src="/usr/share/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="style.css" />
+		<title>Screenshot and Screencast</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<div class="topnav">
+		<a class="active" href="index.html">HOME</a>
+		<a href="#news">News</a>
+		<a href="#contact">Contact</a>
+		<a href="#about">About</a>
+	</div>
+	<body>
+		<div class="content">
+		
+<div id="Screenshot and Screencast"><h1 id="Screenshot and Screencast">Screenshot and Screencast</h1></div>
+
+<div id="Screenshot and Screencast-Screenshot"><h2 id="Screenshot">Screenshot</h2></div>
+<ul>
+<li>
+<em>Scrot is needed for screenshot</em>
+
+<ol>
+<li>
+Whole screen
+
+<ul>
+<li>
+scrot <em>filename</em>.png
+
+</ul>
+<li>
+Snipping
+
+<ul>
+<li>
+scrot <em>filename</em>.png -s
+
+</ul>
+</ol>
+</ul>
+
+<div id="Screenshot and Screencast-Screencast"><h2 id="Screencast">Screencast</h2></div>
+<ul>
+<li>
+<em>ffmpeg is needed for screencast</em>
+
+<ol>
+<li>
+Loss-less video
+
+<ul>
+<li>
+ffmpeg -f x11grab -video_size 1366x768 -i $DISPLAY -f alsa -i default -c:v ffvhuff -c:a flac <em>output</em>.mkv
+
+</ul>
+<li>
+Resize
+
+<ul>
+<li>
+ffmpeg -f x11grab -s 1366x768 -r 25 -i $DISPLAY -f alsa -i default test.mp4
+
+</ul>
+<li>
+Split video (with "copy" is to disable re-encoding")
+
+<ul>
+<li>
+ffmpeg -i <em>input</em>.mp4 -vcodec copy -acodec copy -ss 00:01:00.000 -t 00:00:10.000 <em>output</em>.mp4
+
+</ul>
+</ol>
+</ul>
+
+<div id="Screenshot and Screencast-Webcam Recording"><h2 id="Webcam Recording">Webcam Recording</h2></div>
+<ul>
+<li>
+ffmpeg -f v4l2 -framerate 25 -video_size 1280x720 -i /dev/video0 <em>filename</em>.mkv
+
+</ul>
+
+		</div>
+	</body>
+</html>
