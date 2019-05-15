@@ -1,4 +1,4 @@
-.navbar {
+.topnav {
   overflow: hidden;
   background-color: #333;
   position: fixed;
@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-.navbar a {
+.topnav a {
   float: left;
   display: block;
   color: #f2f2f2;
@@ -16,7 +16,7 @@
   font-size: 17px;
 }
 
-.navbar a:hover {
+.topnav a:hover {
   background: #ddd;
   color: black;
 }
