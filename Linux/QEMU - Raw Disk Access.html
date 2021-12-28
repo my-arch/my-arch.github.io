@@ -1,0 +1,53 @@
+<script type="text/javascript" src="/usr/share/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/style.css" />
+		<title>QEMU - Raw Disk Access</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<div class="topnav">
+		<a class="active" href="https://my-arch.github.io/index.html">HOME</a>
+		<a href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
+		<a href="https://my-arch.github.io/Math/Mathematics.html">MATHEMATICS</a>
+		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING MATERIALS</a>
+	</div>
+	<body>
+		<div class="content">
+		
+<div id="QEMU/KVM"><h1 id="QEMU/KVM">QEMU/KVM</h1></div>
+
+<ol>
+<li>
+sudo pacman -S spice-gtk ovmf qemu
+
+<li>
+qemu-system-x86_64 -enable-kvm --bios /usr/share/ovmf/x64/OVMF_CODE.fd -m 8G -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time -machine type=pc,accel=kvm -drive file=/dev/nvme0n1,format=raw,media=disk -smp $(nproc) -daemonize -vga qxl -spice port=5930,disable-ticketing -device virtio-serial -device virtserialport,chardev=spicechannel0,name=com.redhat.spice.0 -chardev spicevmc,id=spicechannel0,name=vdagent
+
+<li>
+spicy -h 127.0.0.1 -p 5930 &amp; disown spicy
+
+<li>
+install spice driver in windows guest
+
+</ol>
+
+<div id="VirtualBox"><h1 id="VirtualBox">VirtualBox</h1></div>
+<ol>
+<li>
+sudo usermod -a -G disk chew
+
+<li>
+Restart
+
+<li>
+VBoxManage internalcommands createrawvmdk -filename
+   /home/chew/Documents/9_VirtualBox/win10.vmdk -rawdisk /dev/nvme0n1
+   -partitions 1,2,3 -relative
+
+</ol>
+
+		</div>
+	</body>
+</html>

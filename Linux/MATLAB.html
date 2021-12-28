@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/style.css" />
-		<title>External Monitor</title>
+		<title>MATLAB</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	</head>
 	<div class="topnav">
@@ -16,39 +16,26 @@
 	<body>
 		<div class="content">
 		
-<div id="External Monitor Setting"><h1 id="External Monitor Setting">External Monitor Setting</h1></div>
+<div id="MATLAB Live Script"><h1 id="MATLAB Live Script">MATLAB Live Script</h1></div>
 
-<div id="External Monitor Setting-Required Package"><h2 id="Required Package">Required Package</h2></div>
 <ol>
 <li>
-xorg-xrandr
+Install libselinux
 
 <li>
-alsa-utils
-
-</ol>
-
-<div id="External Monitor Setting-Configuration"><h2 id="Configuration">Configuration</h2></div>
-<ol>
-<li>
-To read connected screen's properties
+Relink libg* (see: <a href="https://www.mathworks.com/matlabcentral/answers/475100-documentation-and-live-editor-shows-black-screen-on-linux)">https://www.mathworks.com/matlabcentral/answers/475100-documentation-and-live-editor-shows-black-screen-on-linux)</a>
 
 <ul>
 <li>
-xrandr
+mkdir $Matlab_root/cefclient/sys/os/glnxa64/0_excluded 
+
+<li>
+mv \(Matlab_root/cefclient/sys/os/glnxa64/libg* \)Matlab_root/cefclient/sys/os/glnxa64/0_excluded
 
 </ul>
 <li>
-To off laptop's screen and on external monitor
+Install (aur) gconf - MATLAB 2018b
 
-<ul>
-<li>
-xrandr --output eDP1 --off --output HDMI1 --auto
-
-<li>
-xrandr --output eDP1 --off --output HDMI1 --mode 1920x1080
-
-</ul>
 </ol>
 
 		</div>

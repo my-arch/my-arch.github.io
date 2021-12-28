@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/style.css" />
-		<title>External Monitor</title>
+		<title>Printer</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	</head>
 	<div class="topnav">
@@ -16,37 +16,34 @@
 	<body>
 		<div class="content">
 		
-<div id="External Monitor Setting"><h1 id="External Monitor Setting">External Monitor Setting</h1></div>
+<div id="Add Printer"><h1 id="Add Printer">Add Printer</h1></div>
 
-<div id="External Monitor Setting-Required Package"><h2 id="Required Package">Required Package</h2></div>
 <ol>
 <li>
-xorg-xrandr
-
-<li>
-alsa-utils
-
-</ol>
-
-<div id="External Monitor Setting-Configuration"><h2 id="Configuration">Configuration</h2></div>
-<ol>
-<li>
-To read connected screen's properties
+Install cups, system-config-printer
 
 <ul>
 <li>
-xrandr
+sudo pacman -S cups system-config-printer
 
 </ul>
 <li>
-To off laptop's screen and on external monitor
+Enable and start cups.socket
 
 <ul>
 <li>
-xrandr --output eDP1 --off --output HDMI1 --auto
+sudo systemctl enable cups.socket
 
 <li>
-xrandr --output eDP1 --off --output HDMI1 --mode 1920x1080
+sudo systemctl start cups.socket
+
+</ul>
+<li>
+Install driver
+
+<ul>
+<li>
+Zone 1 UTAR: openprinting-ppds-postscript-ricoh (aur)
 
 </ul>
 </ol>

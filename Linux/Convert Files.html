@@ -8,10 +8,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	</head>
 	<div class="topnav">
-		<a href="https://my-arch.github.io/index.html">HOME</a>
-		<a class="active" href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
+		<a class="active" href="https://my-arch.github.io/index.html">HOME</a>
+		<a href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
 		<a href="https://my-arch.github.io/Math/Mathematics.html">MATHEMATICS</a>
-		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING</a>
+		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING MATERIALS</a>
 	</div>
 	<body>
 		<div class="content">
@@ -72,6 +72,28 @@ gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=<em>combine</em>.pdf -dBATCH <em>1</
 </ul>
 </ol>
 
+<ol>
+<li>
+Flatten PDF
+
+<ul>
+<li>
+gs -sDEVICE=pdfwrite -dPDFSETTINGS=/default -dNOPAUSE -dQUIET -dBATCH -sOutputFile=<em>flattened</em>.pdf <em>input</em>.pdf
+
+</ul>
+</ol>
+
+<ol>
+<li>
+Flatten PDF with no-copy
+
+<ul>
+<li>
+gs -o <em>output</em>.pdf -dNoOutputFonts -sDEVICE=pdfwrite <em>input</em>.pdf
+
+</ul>
+</ol>
+
 <div id="Convert Files-Convert DJVU to PDF"><h2 id="Convert DJVU to PDF">Convert DJVU to PDF</h2></div>
 <ol>
 <li>
@@ -79,7 +101,7 @@ DJVU manipulation
 
 <ul>
 <li>
-ddjvu --format=pdf <em>inputfile.djvu</em> <em>ouputfile.pdf</em>
+ddjvu --format=pdf <em>inputfile</em>.djvu <em>ouputfile</em>.pdf
 
 </ul>
 </ol>
@@ -117,6 +139,16 @@ Zip folder with password
 zip -P <em>Password</em> -r <em>Folder</em>.zip <em>Folder</em>
 
 </ul>
+</ol>
+
+<div id="Convert Files-Change File Permission"><h2 id="Change File Permission">Change File Permission</h2></div>
+<ol>
+<li>
+find [<em>yourdir</em>] -type f -exec chmod 644 {} \;
+
+<li>
+find [<em>yourdir</em>] -type d -exec chmod 755 () \;
+
 </ol>
 
 		</div>

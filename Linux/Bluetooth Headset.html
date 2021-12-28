@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/style.css" />
-		<title>External Monitor</title>
+		<title>Bluetooth Headset</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	</head>
 	<div class="topnav">
@@ -16,37 +16,60 @@
 	<body>
 		<div class="content">
 		
-<div id="External Monitor Setting"><h1 id="External Monitor Setting">External Monitor Setting</h1></div>
+<div id="Connect Bluetooth Headset"><h1 id="Connect Bluetooth Headset">Connect Bluetooth Headset</h1></div>
 
-<div id="External Monitor Setting-Required Package"><h2 id="Required Package">Required Package</h2></div>
 <ol>
 <li>
-xorg-xrandr
-
-<li>
-alsa-utils
-
-</ol>
-
-<div id="External Monitor Setting-Configuration"><h2 id="Configuration">Configuration</h2></div>
-<ol>
-<li>
-To read connected screen's properties
+Install
 
 <ul>
 <li>
-xrandr
+bluez
+
+<li>
+pulseaudio-bluetooth
 
 </ul>
 <li>
-To off laptop's screen and on external monitor
+Start bluetooth.service
 
 <ul>
 <li>
-xrandr --output eDP1 --off --output HDMI1 --auto
+systemctl start bluetooth.service
+
+</ul>
+<li>
+Connect bluetooth
+
+<ul>
+<li>
+bluetoothctl
 
 <li>
-xrandr --output eDP1 --off --output HDMI1 --mode 1920x1080
+power on
+
+<li>
+scan on
+
+<li>
+devices
+
+<li>
+pair mac_address
+
+<li>
+connect mac_address
+
+</ul>
+<li>
+Configuration of Volume Control
+
+<ul>
+<li>
+Off Built-in Audio
+
+<li>
+On Headset
 
 </ul>
 </ol>

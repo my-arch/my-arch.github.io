@@ -1,0 +1,88 @@
+<script type="text/javascript" src="/usr/share/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/style.css" />
+		<title>Add users to Teams using Powershell</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<div class="topnav">
+		<a class="active" href="https://my-arch.github.io/index.html">HOME</a>
+		<a href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
+		<a href="https://my-arch.github.io/Math/Mathematics.html">MATHEMATICS</a>
+		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING MATERIALS</a>
+	</div>
+	<body>
+		<div class="content">
+		
+<div id="Bulk add users into Microsoft Teams using Powershell under Arch Linux"><h1 id="Bulk add users into Microsoft Teams using Powershell under Arch Linux">Bulk add users into Microsoft Teams using Powershell under Arch Linux</h1></div>
+
+<div id="Bulk add users into Microsoft Teams using Powershell under Arch Linux-Installation"><h2 id="Installation">Installation</h2></div>
+<ol>
+<li>
+yay -S powershell-bin
+
+<li>
+Install-Module -Name MicrosoftTeams
+
+</ol>
+
+<div id="Bulk add users into Microsoft Teams using Powershell under Arch Linux-Add Users to Main Group"><h2 id="Add Users to Main Group">Add Users to Main Group</h2></div>
+<ol>
+<li>
+Connect-MicrosoftTeams
+
+<li>
+Get-Team -User chewcy@utar.edu.my
+
+<li>
+$path='path_to_csv_file'
+
+<li>
+$GroupId='id_copied_from_get-team'
+
+<li>
+Import-Csv \(path | % { Add-TeamUser -User \)_.email -GroupId $GroupId }
+
+</ol>
+
+<div id="Bulk add users into Microsoft Teams using Powershell under Arch Linux-Add Users to Private Channel"><h2 id="Add Users to Private Channel">Add Users to Private Channel</h2></div>
+<ol>
+<li>
+Import-Csv -Path \(path | foreach{Add-TeamChannelUser -GroupId \)GroupdId -DisplayName "YOUR_PRIVATE_CHANNEL_NAME" -user $_.email}
+
+</ol>
+
+
+<div id="Bulk add users into Microsoft Teams using Powershell under Arch Linux-For Windows"><h2 id="For Windows">For Windows</h2></div>
+<ul>
+<li>
+If Connect-MicrosoftTeams not working, try to relax execution policy:
+
+<ul>
+<li>
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+
+</ul>
+<li>
+To update powershell:
+
+<ul>
+<li>
+install-Module PowerShellGet -Repository PSGallery -Force
+
+</ul>
+<li>
+To install preview version of Microsoft Teams:
+
+<ul>
+<li>
+Install-Module MicrosoftTeams -AllowPrerelease -RequiredVersion "1.1.9-preview"
+
+</ul>
+</ul>
+
+		</div>
+	</body>
+</html>

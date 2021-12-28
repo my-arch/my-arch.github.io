@@ -8,10 +8,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	</head>
 	<div class="topnav">
-		<a href="https://my-arch.github.io/index.html">HOME</a>
-		<a class="active" href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
+		<a class="active" href="https://my-arch.github.io/index.html">HOME</a>
+		<a href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
 		<a href="https://my-arch.github.io/Math/Mathematics.html">MATHEMATICS</a>
-		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING</a>
+		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING MATERIALS</a>
 	</div>
 	<body>
 		<div class="content">
@@ -24,7 +24,18 @@ Install software needed
 
 <ul>
 <li>
-sudo pacman -S feh i3lock zathura i3-gaps perl-anyevent-i3 qutebrowser mtpfs-simple vlc auctex linux-headers rofi
+sudo pacman -S feh i3lock zathura i3-gaps perl-anyevent-i3 qutebrowser mtpfs-simple mpd ncmpcpp auctex linux-headers rofi firefox polybar mpv gvim thunar
+
+</ul>
+<li>
+Configuration
+
+<ul>
+<li>
+sudo cp /usr/share/X11/xorg.conf.d/70-synaptics.conf /etc/X11/xorg.conf.d/
+
+<li>
+sudo vim /etc/X11/xorg.conf.d/70-synaptics.conf
 
 </ul>
 </ol>

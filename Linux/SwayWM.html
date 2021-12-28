@@ -1,0 +1,57 @@
+<script type="text/javascript" src="/usr/share/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/style.css" />
+		<title>SwayWM</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<div class="topnav">
+		<a class="active" href="https://my-arch.github.io/index.html">HOME</a>
+		<a href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
+		<a href="https://my-arch.github.io/Math/Mathematics.html">MATHEMATICS</a>
+		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING MATERIALS</a>
+	</div>
+	<body>
+		<div class="content">
+		
+<div id="Sway Window Manager"><h1 id="Sway Window Manager">Sway Window Manager</h1></div>
+
+<div id="Sway Window Manager-Script to Start SwayWM"><h2 id="Script to Start SwayWM">Script to Start SwayWM</h2></div>
+<ul>
+<li>
+Create a 'startw' executable in scripts folder
+
+<li>
+Create symlink of the file to ~/.local/bin
+
+</ul>
+
+<div id="Sway Window Manager-Script to Start SwayWM-startw"><h3 id="startw">startw</h3></div>
+<p>
+```bash
+#!/bin/bash
+</p>
+
+<p>
+export GTK_IM_MODULE=fcitx5
+export QT_IM_MODULE=fcitx5
+export XMODIFIERS=@im=fcitx5
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_TYPE=wayland
+export QT_QPA_PLATFORM=wayland
+export LIBSEAT_BACKEND=logind
+export _JAVA_AWT_WM_NONREPARENTING=1
+export SDL_VIDEODRIVER=wayland
+export XDG_SESSION_DESKTOP=sway
+</p>
+
+<p>
+sway
+```
+</p>
+
+		</div>
+	</body>
+</html>
