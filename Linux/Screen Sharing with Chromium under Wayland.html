@@ -11,12 +11,12 @@
 		<a class="active" href="https://my-arch.github.io/index.html">HOME</a>
 		<a href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
 		<a href="https://my-arch.github.io/Math/Mathematics.html">MATHEMATICS</a>
-		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING MATERIALS</a>
+		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING</a>
 	</div>
 	<body>
 		<div class="content">
 		
-<div id="Installation"><h1 id="Installation">Installation</h1></div>
+<div id="Installation"><h1 id="Installation" class="header"><a href="#Installation">Installation</a></h1></div>
 <ul>
 <li>
 Install libpipewire02, pipewire, pipewire-pulse
@@ -24,9 +24,12 @@ Install libpipewire02, pipewire, pipewire-pulse
 <li>
 Install xdg-desktop-portal-wlr
 
+<li>
+Install wireplumber
+
 </ul>
 
-<div id="Chromium Setup"><h1 id="Chromium Setup">Chromium Setup</h1></div>
+<div id="Chromium Setup"><h1 id="Chromium Setup" class="header"><a href="#Chromium Setup">Chromium Setup</a></h1></div>
 <ul>
 <li>
 Enable WebRTC in chromium
@@ -36,7 +39,7 @@ Set the env to be XDG_CURRENT_DESKTOP=sway and XDG_SESSION_TYPE=wayland
 
 </ul>
 
-<div id="System Setup"><h1 id="System Setup">System Setup</h1></div>
+<div id="System Setup"><h1 id="System Setup" class="header"><a href="#System Setup">System Setup</a></h1></div>
 <ul>
 <li>
 systemctl --user enable pipewire.service
@@ -49,7 +52,7 @@ Uncomment metadata #export metadata api
       (<a href="https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/768#note_812588)">https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/768#note_812588)</a>
 
 </ul>
-<div id="Before Launch Chromium"><h1 id="Before Launch Chromium">Before Launch Chromium</h1></div>
+<div id="Before Launch Chromium"><h1 id="Before Launch Chromium" class="header"><a href="#Before Launch Chromium">Before Launch Chromium</a></h1></div>
 <ul>
 <li>
 Run:

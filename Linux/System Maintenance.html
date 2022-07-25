@@ -11,21 +11,21 @@
 		<a class="active" href="https://my-arch.github.io/index.html">HOME</a>
 		<a href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
 		<a href="https://my-arch.github.io/Math/Mathematics.html">MATHEMATICS</a>
-		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING MATERIALS</a>
+		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING</a>
 	</div>
 	<body>
 		<div class="content">
 		
-<div id="System Maintenance"><h1 id="System Maintenance">System Maintenance</h1></div>
+<div id="System Maintenance"><h1 id="System Maintenance" class="header"><a href="#System Maintenance">System Maintenance</a></h1></div>
 
-<div id="System Maintenance-Add Package Signature Key"><h2 id="Add Package Signature Key">Add Package Signature Key</h2></div>
+<div id="System Maintenance-Add Package Signature Key"><h2 id="Add Package Signature Key" class="header"><a href="#System Maintenance-Add Package Signature Key">Add Package Signature Key</a></h2></div>
 <ul>
 <li>
 gpg --keyserver hkp://keys.gnupg.net --recv-keys <em>&lt;keyid&gt;</em>
 
 </ul>
 
-<div id="System Maintenance-Clean up system"><h2 id="Clean up system">Clean up system</h2></div>
+<div id="System Maintenance-Clean up system"><h2 id="Clean up system" class="header"><a href="#System Maintenance-Clean up system">Clean up system</a></h2></div>
 <ol>
 <li>
 Remove all the cached packages that are not currently installed, and the unused sync database:
@@ -61,7 +61,7 @@ sudo pacman -Rns $(pacman -Qtdq)
 </ul>
 </ol>
 
-<div id="System Maintenance-Build Package"><h2 id="Build Package">Build Package</h2></div>
+<div id="System Maintenance-Build Package"><h2 id="Build Package" class="header"><a href="#System Maintenance-Build Package">Build Package</a></h2></div>
 <ol>
 <li>
 Install the necessary packages to compile (may be outdated)
@@ -92,7 +92,7 @@ sudo pacman -U <em>PKG</em>.pkg.tar.xz
 </ul>
 </ol>
 
-<div id="System Maintenance-Hard Drive Related"><h2 id="Hard Drive Related">Hard Drive Related</h2></div>
+<div id="System Maintenance-Hard Drive Related"><h2 id="Hard Drive Related" class="header"><a href="#System Maintenance-Hard Drive Related">Hard Drive Related</a></h2></div>
 <ol>
 <li>
 Find Bad Sectors
@@ -128,14 +128,14 @@ sudo fsck /dev/sd*
 </ul>
 </ol>
 
-<div id="System Maintenance-Mark package as dependencies"><h2 id="Mark package as dependencies">Mark package as dependencies</h2></div>
+<div id="System Maintenance-Mark package as dependencies"><h2 id="Mark package as dependencies" class="header"><a href="#System Maintenance-Mark package as dependencies">Mark package as dependencies</a></h2></div>
 <ol>
 <li>
 sudo pacman -D --asexplicit <em>PKG</em>
 
 </ol>
 
-<div id="System Maintenance-Scan for virus"><h2 id="Scan for virus">Scan for virus</h2></div>
+<div id="System Maintenance-Scan for virus"><h2 id="Scan for virus" class="header"><a href="#System Maintenance-Scan for virus">Scan for virus</a></h2></div>
 <ol>
 <li>
 Using ClamAV

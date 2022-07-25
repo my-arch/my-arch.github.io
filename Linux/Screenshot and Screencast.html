@@ -11,14 +11,14 @@
 		<a class="active" href="https://my-arch.github.io/index.html">HOME</a>
 		<a href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
 		<a href="https://my-arch.github.io/Math/Mathematics.html">MATHEMATICS</a>
-		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING MATERIALS</a>
+		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING</a>
 	</div>
 	<body>
 		<div class="content">
 		
-<div id="Screenshot and Screencast"><h1 id="Screenshot and Screencast">Screenshot and Screencast</h1></div>
+<div id="Screenshot and Screencast"><h1 id="Screenshot and Screencast" class="header"><a href="#Screenshot and Screencast">Screenshot and Screencast</a></h1></div>
 
-<div id="Screenshot and Screencast-Screenshot"><h2 id="Screenshot">Screenshot</h2></div>
+<div id="Screenshot and Screencast-Screenshot"><h2 id="Screenshot" class="header"><a href="#Screenshot and Screencast-Screenshot">Screenshot</a></h2></div>
 <ul>
 <li>
 <em>Scrot is needed for screenshot</em>
@@ -43,7 +43,7 @@ scrot <em>filename</em>.png -s
 </ol>
 </ul>
 
-<div id="Screenshot and Screencast-Screencast"><h2 id="Screencast">Screencast</h2></div>
+<div id="Screenshot and Screencast-Screencast"><h2 id="Screencast" class="header"><a href="#Screenshot and Screencast-Screencast">Screencast</a></h2></div>
 <ul>
 <li>
 <em>ffmpeg is needed for screencast</em>
@@ -106,7 +106,7 @@ ffmpeg -i <em>input</em>.mp4 -c:v libx265 -crf 28 <em>output</em>.mp4
 </ol>
 </ul>
 
-<div id="Screenshot and Screencast-Webcam Recording"><h2 id="Webcam Recording">Webcam Recording</h2></div>
+<div id="Screenshot and Screencast-Webcam Recording"><h2 id="Webcam Recording" class="header"><a href="#Screenshot and Screencast-Webcam Recording">Webcam Recording</a></h2></div>
 <ul>
 <li>
 ffmpeg -f v4l2 -framerate 25 -video_size 1280x720 -i /dev/video0 <em>filename</em>.mkv
