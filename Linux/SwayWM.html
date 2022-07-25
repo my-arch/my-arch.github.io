@@ -29,25 +29,31 @@ Create symlink of the file to ~/.local/bin
 </ul>
 
 <div id="Sway Window Manager-Script to Start SwayWM-startw"><h3 id="startw">startw</h3></div>
+<p>
+```console
+</p>
 
-<pre>
-    <code>
-        #!/bin/bash
+<p>
+#!/bin/bash
+</p>
 
-        export GTK_IM_MODULE=fcitx5
-        export QT_IM_MODULE=fcitx5
-        export XMODIFIERS=@im=fcitx5
-        export XDG_CURRENT_DESKTOP=sway
-        export XDG_SESSION_TYPE=wayland
-        export QT_QPA_PLATFORM=wayland
-        export LIBSEAT_BACKEND=logind
-        export _JAVA_AWT_WM_NONREPARENTING=1
-        export SDL_VIDEODRIVER=wayland
-        export XDG_SESSION_DESKTOP=sway
+<p>
+export GTK_IM_MODULE=fcitx5
+export QT_IM_MODULE=fcitx5
+export XMODIFIERS=@im=fcitx5
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_TYPE=wayland
+export QT_QPA_PLATFORM=wayland
+export LIBSEAT_BACKEND=logind
+export _JAVA_AWT_WM_NONREPARENTING=1
+export SDL_VIDEODRIVER=wayland
+export XDG_SESSION_DESKTOP=sway
+</p>
 
-        sway
-    </code>
-</pre>
+<p>
+sway
+```
+</p>
 
 		</div>
 	</body>
