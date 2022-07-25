@@ -1,0 +1,1042 @@
+<script type="text/javascript" src="/usr/share/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/style.css" />
+		<title>Dual Booting with Windows</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<div class="topnav">
+		<a class="active" href="https://my-arch.github.io/index.html">HOME</a>
+		<a href="https://my-arch.github.io/Linux/Linux.html">LINUX</a>
+		<a href="https://my-arch.github.io/Math/Mathematics.html">MATHEMATICS</a>
+		<a href="https://my-arch.github.io/Teaching/Teaching.html">TEACHING</a>
+	</div>
+	<body>
+		<div class="content">
+		
+<ol>
+<li>
+Dual Booting Arch Linux with Windows
+
+</ol>
+
+<p>
+## Base System Installation
+</p>
+
+<p>
+### Windows 11 System
+</p>
+<ul>
+<li>
+We will format the D drive into Linux partition
+
+</ul>
+<blockquote>
+![Windows 11.](./win11.png "Partitions in Windows 11.")
+</blockquote>
+
+<ul>
+<li>
+We will partition it into three different partitions
+
+<ol>
+<li>
+Root - 100GB
+
+<li>
+Swap - 16GB
+
+<li>
+Home - Remaining space
+
+</ol>
+</ul>
+
+<p>
+### Preparing Bootable USB
+</p>
+<ul>
+<li>
+Download Arch Linux ISO from [here](<a href="https://archlinux.org/download/)">https://archlinux.org/download/)</a>
+
+<li>
+Download Rufus from [here](<a href="https://rufus.ie/en/)">https://rufus.ie/en/)</a>
+
+<li>
+Create bootable USB using Rufus
+
+</ul>
+<blockquote>
+![Rufus.](./rufus.png "Create bootable USB using Rufus.")
+</blockquote>
+
+<p>
+### Disable Secure Boot from BIOS
+</p>
+<ul>
+<li>
+Read more from [Installation
+  Guide](<a href="https://wiki.archlinux.org/title/Installation_guide#Boot_the_live_environment).">https://wiki.archlinux.org/title/Installation_guide#Boot_the_live_environment).</a>
+
+</ul>
+
+<p>
+### Boot into Live USB
+</p>
+<ul>
+<li>
+Restart and boot into the USB create
+
+<li>
+Wait until we have
+    &gt; root@archiso ~ #
+
+</ul>
+
+<p>
+### Partitioning
+</p>
+<ul>
+<li>
+Check the partitions using fdisk:
+    &gt; root@archiso ~ # fdisk -l
+
+</ul>
+<blockquote>
+We will see
+</blockquote>
+
+<p>
+		Device         Start     End       Sectors   Size   Type                        
+		/dev/nvme0n1p1 2048      206847    204800    100M   EFI System                  
+		/dev/nvme0n1p2 206848    239615    32768     16M    Microsoft reserved          
+		/dev/nvme0n1p3 239616    203548671 203309056 96.9G  Microsoft basic data        
+		/dev/nvme0n1p4 203548672 204799999 1251328   611M   Windows recovery environment
+		/dev/nvme0n1p5 204800000 976773119 771971072 368.1G Microsoft basic data        
+</p>
+
+<ul>
+<li>
+fdisk into the drive (/dev/nvme0n1 in this case):
+	&gt; root@archiso ~ # fdisk /dev/nvme0n1
+
+</ul>
+
+<p>
+		Welcome to fdisk (util-linux 2.38).
+		Changes will remain in memory only, until you decide to write them.
+		Be careful before using the write command.
+</p>
+		
+<p>
+		Command (m for help):
+</p>
+
+<ul>
+<li>
+Delete the D drive (partition 5):
+    &gt; Command (m for help): d
+	&gt; Partition number (1-5, default 5): 5
+
+</ul>
+
+<p>
+		Partition 5 has been deleted
+</p>
+
+<ul>
+<li>
+Create three new partitions (root, swap and home) from the space we just deleted:
+    &gt; Command (m for help): n<br>
+	&gt; Partition number (5-128, default 5):<br>
+	&gt; First sector (204800000-976773134, default 204800000):<br>
+	&gt; Last sector, +/-sectors or +/-size{K,M,G,T,P} (204800000-976773134, default 976773119): +100G
+
+</ul>
+
+<p>
+		Created a new partition 5 of type 'Linux filesystem' and of size 100 GiB.
+</p>
+<blockquote>
+&gt; Command (m for help): n<br>
+</blockquote>
+<p>
+	&gt; Partition number (6-128, default 6):<br>
+	&gt; First sector (414515200-976773134, default 414515200):<br>
+	&gt; Last sector, +/-sectors or +/-size{K,M,G,T,P} (414515200-976773134, default 976773119): +16G
+</p>
+
+<p>
+		Created a new partition 6 of type 'Linux filesystem' and of size 16 GiB.
+</p>
+<blockquote>
+&gt; Command (m for help): n<br>
+</blockquote>
+<p>
+	&gt; Partition number (7-128, default 7):<br>
+	&gt; First sector (448069632-976773134, default 448069632):<br>
+	&gt; Last sector, +/-sectors or +/-size{K,M,G,T,P} (448069632-976773134, default 976773119):
+</p>
+
+<p>
+		Created a new partition 7 of type 'Linux filesystem' and of size 252.1 GiB.
+</p>
+
+<ul>
+<li>
+View the partition table:
+    &gt; Command (m for help): p<br>
+
+</ul>
+<blockquote>
+Device             Start       End   Sectors   Size Type
+/dev/nvme0n1p1      2048    206847    204800   100M EFI System
+/dev/nvme0n1p2    206848    239615     32768    16M Microsoft reserved
+/dev/nvme0n1p3    239616 203548671 203309056  96.9G Microsoft basic data
+/dev/nvme0n1p4 203548672 204799999   1251328   611M Windows recovery environment
+/dev/nvme0n1p5 204800000 414515199 209715200   100G Linux filesystem
+/dev/nvme0n1p6 414515200 448069631  33554432    16G Linux filesystem
+/dev/nvme0n1p7 448069632 976773119 528703488 252.1G Linux filesystem
+</blockquote>
+
+<ul>
+<li>
+Change the filesystem type:
+    &gt; Command (m for help): t<br>
+	&gt; Partition number (1-7, default 7): 5<br>
+    &gt; Partition type or alias (type L to list all): 23
+
+</ul>
+
+<p>
+		Changed type of partition 'Linux filesystem' to 'Linux root (x86-64)'.
+</p>
+<blockquote>
+&gt; Command (m for help): t<br>
+</blockquote>
+<p>
+	&gt; Partition number (1-7, default 7): 6<br>
+</p>
+<blockquote>
+&gt; Partition type or alias (type L to list all): 19
+</blockquote>
+
+<p>
+		Changed type of partition 'Linux filesystem' to 'Linux swap'.
+</p>
+<blockquote>
+&gt; Command (m for help): t<br>
+</blockquote>
+<p>
+	&gt; Partition number (1-7, default 7): 7<br>
+</p>
+<blockquote>
+&gt; Partition type or alias (type L to list all): 41
+</blockquote>
+
+<p>
+		Changed type of partition 'Linux filesystem' to 'Linux home'.
+</p>
+
+<ul>
+<li>
+Write the changes to disk:
+    &gt; Command (m for help): w<br>
+
+</ul>
+<blockquote>
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+</blockquote>
+
+<ul>
+<li>
+Check that all partitions are correct:
+    &gt; root@archiso ~ # fdisk -l
+
+</ul>
+<blockquote>
+Device             Start       End   Sectors   Size Type
+/dev/nvme0n1p1      2048    206847    204800   100M EFI System
+/dev/nvme0n1p2    206848    239615     32768    16M Microsoft reserved
+/dev/nvme0n1p3    239616 203548671 203309056  96.9G Microsoft basic data
+/dev/nvme0n1p4 203548672 204799999   1251328   611M Windows recovery environment
+/dev/nvme0n1p5 204800000 414515199 209715200   100G Linux root (x86-64)
+/dev/nvme0n1p6 414515200 448069631  33554432    16G Linux swap
+/dev/nvme0n1p7 448069632 976773119 528703488 252.1G Linux home
+</blockquote>
+
+<ul>
+<li>
+Format root and home partitions:
+    &gt; root@archiso ~ # mkfs.ext4 /dev/nvme0n1p5<br>
+    &gt; root@archiso ~ # mkfs.ext4 /dev/nvme0n1p7<br>
+
+</ul>
+
+<ul>
+<li>
+Format swap partition:
+    &gt; root@archiso ~ # mkswap /dev/nvme0n1p6<br>
+    &gt; root@archiso ~ # swapon /dev/nvme0n1p6<br>
+
+</ul>
+
+<ul>
+<li>
+Mount partitions (note that we mount the EFI partition at /mnt/efi)
+    &gt; root@archiso ~ # mount /dev/nvme0n1p5 /mnt<br>
+    &gt; root@archiso ~ # mount --mkdir /dev/nvme0n1p1 /mnt/efi<br>
+    &gt; root@archiso ~ # mount --mkdir /dev/nvme0n1p7 /mnt/home<br>
+
+</ul>
+
+<p>
+### Connect to WiFi
+</p>
+<ul>
+<li>
+Connect to WiFi using iwctl:
+    &gt; root@archiso ~ # iwctl<br>
+    &gt; [iwd]# station list<br>
+
+</ul>
+<blockquote>
+Devices in Station Mode
+-----------------------------------------------------------------------
+Name          State           Scanning
+-----------------------------------------------------------------------
+wlan0         disconnected
+&gt; [iwd]# station wlan0 scan<br>
+&gt; [iwd]# station wlan0 get-networks<br>
+</blockquote>
+<blockquote>
+Available networks
+-----------------------------------------------------------------------
+Network name            Security            Signal
+-----------------------------------------------------------------------
+&gt; Fermat                  psk                 ****
+chew                    psk                 ****
+&gt; [iwd]# station wlan0 connect Fermat
+</blockquote>
+<blockquote>
+Type the network passphrase for Fermat psk.
+Passphrase: ********
+</blockquote>
+<blockquote>
+&gt; [iwd]# exit
+</blockquote>
+
+<p>
+### Installation and Basic Setup
+</p>
+<ul>
+<li>
+Installation using pacstrap
+    &gt; pacstrap /mnt base linux linux-firmware vim neovim
+
+</ul>
+    
+<ul>
+<li>
+Generate fstab file:
+    &gt; root@archiso ~ # genfstab -U /mnt &gt;&gt; /mnt/etc/fstab
+
+</ul>
+        
+<ul>
+<li>
+Check if all partitions are mounted correctly:
+    &gt; root@archiso ~ # cat /mnt/etc/fstab
+
+</ul>
+
+<ol>
+<li>
+/dev/nvme0n1p5
+        UUID=52e7d1da-1c6c-4466-baa7-a5244a1be306	/         	ext4      	rw,relatime	 0 1
+
+</ol>
+
+<ol>
+<li>
+/dev/nvme0n1p7
+        UUID=84dea383-0c98-4db2-86d8-36c8fa8999a9	/home     	ext4      	rw,relatime	 0 2
+
+</ol>
+
+<ol>
+<li>
+/dev/nvme0n1p1
+        UUID=6084-CFB8      	/efi      	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	 0 2
+
+</ol>
+
+<ol>
+<li>
+/dev/nvme0n1p6
+        UUID=ea490bac-cc6d-48ff-b1dd-53c300fa578d	none      	swap      	defaults  	 0 0
+
+</ol>
+
+<ul>
+<li>
+chroot:
+    &gt; root@archiso ~ # arch-chroot /mnt
+
+</ul>
+
+<ul>
+<li>
+Setting locale (uncomment en_US.UTF-8 UTF-8) and Time Zone:
+    &gt; root@archiso ~ # nvim /etc/locale.gen
+
+</ul>
+<blockquote>
+...
+#en_SG ISO-8859-1
+en_US.UTF-8 UTF-8
+#en_US ISO-8859-1
+...
+&gt; locale-gen
+</blockquote>
+<blockquote>
+Generating locales...
+en_US.UTF-8... done
+Generation complete.
+</blockquote>
+<blockquote>
+&gt; echo "LANG=en_US.UTF-8" &gt; /etc/locale.conf
+</blockquote>
+<blockquote>
+ln -sf /usr/share/zoneinfo/Asia/Kuala_Lumpur /etc/localtime
+</blockquote>
+        
+<ul>
+<li>
+Setting hostname and root password
+    &gt; root@archiso ~ # echo "chew-pc" &gt; /etc/hostname<br>
+    &gt; root@archiso ~ # passwd
+
+</ul>
+<blockquote>
+New password:
+Retype new password:
+passwd: password updated successfully
+</blockquote>
+        
+<ul>
+<li>
+Configure network (edit /etc/hosts as some software may need this. See [here](<a href="https://wiki.archlinux.org/title/Network_configuration)):">https://wiki.archlinux.org/title/Network_configuration)):</a>
+    &gt; root@archiso ~ # nvim /etc/hosts
+
+</ul>
+<blockquote>
+127.0.0.1        localhost
+::1              localhost
+127.0.1.1        chew-pc
+</blockquote>
+
+<p>
+### Boot Loader
+</p>
+<ul>
+<li>
+For dual boot with Windows, install grub, os-prober and uncomment the following line in /etc/default/grub:
+    &gt; pacman -S grub efibootmgr os-prober<br>
+    &gt; nvim /etc/default/grub
+
+</ul>
+<blockquote>
+...
+</blockquote>
+<ol>
+<li>
+Probing for other operating systems is disabled for security reasons. Read
+
+<li>
+documentation on GRUB_DISABLE_OS_PROBER, if still want to enable this
+
+<li>
+functionality install os-prober and uncomment to detect and include other
+
+<li>
+operating systems.
+        GRUB_DISABLE_OS_PROBER=false
+
+</ol>
+
+<ul>
+<li>
+Install grub:
+    &gt; grub-install --efi-directory=/efi<br>
+    &gt; grub-mkconfig -o /boot/grub/grub.cfg
+
+</ul>
+
+<ul>
+<li>
+Software installation (and/or any other software that you wish to install now):
+    &gt; root@archiso ~ # pacman -S net-tools networkmanager dhcpcd wireless_tools
+
+</ul>
+
+<ul>
+<li>
+Enable the Network Manager:
+    &gt; root@archiso ~ # systemctl enable NetworkManager
+
+</ul>
+
+<ul>
+<li>
+Enable the Dynamic Host Configuration Protocol (DHCP):
+    &gt; root@archiso ~ # systemctl enable dhcpcd
+
+</ul>
+
+<p>
+## Add user
+</p>
+<ul>
+<li>
+Add user(s):
+    &gt; root@archiso ~ # useradd -m -g users -G wheel,storage,power,video -s /bin/bash chew<br>
+    &gt; root@archiso ~ # passwd chew
+
+</ul>
+<blockquote>
+New password:
+Retype new password:
+passwd: password updated successfully
+</blockquote>
+        
+<ul>
+<li>
+Install sudo and edit visudo (for user to act as su):
+    &gt; root@archiso ~ # pacman -S sudo<br>
+    &gt; root@archiso ~ # EDITOR=nvim visudo
+
+</ul>
+<blockquote>
+...
+## Uncomment to allow members of group wheel to execute any command
+</blockquote>
+<ol>
+<li>
+%wheel ALL=(ALL:ALL) ALL
+
+</ol>
+<blockquote>
+## Same thing without a password
+</blockquote>
+<ol>
+<li>
+%wheel ALL=(ALL:ALL) NOPASSWD: ALL
+        ...
+
+</ol>
+
+<ul>
+<li>
+Uncomment the row "# %wheel ALL=(ALL:ALL) ALL" to:
+
+</ul>
+<blockquote>
+...
+## Uncomment to allow members of group wheel to execute any command
+%wheel ALL=(ALL:ALL) ALL
+</blockquote>
+<blockquote>
+## Same thing without a password
+</blockquote>
+<ol>
+<li>
+%wheel ALL=(ALL:ALL) NOPASSWD: ALL
+        ...
+
+</ol>
+
+<ul>
+<li>
+Exit from chroot:
+    &gt; root@archiso ~ # exit
+
+</ul>
+
+<ul>
+<li>
+Unmount /mnt and shutdown:
+    &gt; root@archiso ~ # umount -l /mnt<br>
+    &gt; root@archiso ~ # shutdown now
+
+</ul>
+
+<ul>
+<li>
+Remove USB drive
+
+</ul>
+        
+<p>
+## Installing SwayWM
+</p>
+
+<p>
+### Login and Basic Software Installation
+</p>
+<ul>
+<li>
+Power on your machine 
+
+<li>
+You should see GRUB screen after powering up
+
+<li>
+Choose Arch Linux and login to your user account
+
+<li>
+Basic Compiler and Linux Headers:
+    &gt; sudo pacman -S base-devel linux-headers
+
+<li>
+Pacman Scripts:
+    &gt; sudo pacman -S pacman-contrib
+
+<li>
+Other Tools:
+    &gt; sudo pacman -S python-pip git wget
+
+<li>
+Intel graphics:
+    &gt; sudo pacman -S mesa intel-media-driver libva-utils
+
+<li>
+Install polkit to allow users to shutdown (See
+  [here](<a href="https://wiki.archlinux.org/title/Allow_users_to_shutdown)):">https://wiki.archlinux.org/title/Allow_users_to_shutdown)):</a>
+    &gt; sudo pacman -S polkit
+
+<li>
+Yay AUR Helper (See [here](<a href="https://github.com/Jguer/yay)):">https://github.com/Jguer/yay)):</a>
+    &gt; git clone <a href="https://aur.archlinux.org/yay.git<br">https://aur.archlinux.org/yay.git<br</a>>
+    &gt; cd yay<br>
+    &gt; makepkg -si
+
+</ul>
+
+<p>
+### SwayWM and Applications
+</p>
+<ul>
+<li>
+SwayWM and some relevant software:
+    &gt; sudo pacman -S sway swayidle xorg-server-xwayland qt5-wayland waybar light wl-clipboard
+    &gt; yay -S swaylock-effects
+
+<li>
+Application launcher:
+    &gt; yay -S rofi-lbonn-wayland-git
+
+<li>
+EWW Widget:
+    &gt; yay -S eww-wayland-git
+
+<li>
+System monitor:
+    &gt; sudo pacman -S htop intel-gpu-tools
+
+<li>
+ALSA and PulseAudio:
+    &gt; sudo pacman -S alsa-firmware alsa-utils pulseaudio pulseaudio-alsa pavucontrol pamixer
+
+<li>
+Bluetooth:
+    &gt; sudo pacman -S bluez bluez-utils pulseaudio-bluetooth
+
+<li>
+Fonts:
+    &gt; sudo pacman -S ttf-roboto ttf-roboto-mono ttf-ubuntu-font-family ttf-font-awesome wqy-zenhei wqy-bitmapfont wqy-microhei wqy-microhei-lite
+
+<li>
+Screenshot and screencast
+    &gt; sudo pacman -S grim slurp wf-recorder flameshot
+
+<li>
+Office-suites and LaTex:
+    &gt; sudo pacman -S wps-office wps-office-mime ttf-wps-fonts texlive-most
+
+<li>
+PDF readers and editor:
+    &gt; sudo pacman -S zathura zathura-djvu zathura-pdf-mupdf evince xournalpp ghostscript
+    &gt; yay -S masterpdfeditor-free
+
+<li>
+Input method - fcitx5:
+    &gt; sudo pacman -S fcitx5 fcitx5-qt fcitx5-gtk fcitx5-chinese-addons fcitx5-configtool fcitx5-material-color
+
+<li>
+CUPS and printer configuration
+    &gt; sudo pacman -S system-config-printer cups
+
+<li>
+File manager:
+    &gt; sudo pacman -S thunar thunar-volman ntfs-3g gvfs gvfs-mtp polkit-gnome
+    &gt; sudo pacman -S ranger perl-file-mimeinfo xdg-utils
+    &gt; yay -S lf
+
+<li>
+Zip and unzip:
+    &gt; sudo pacman -S zip unzip
+
+<li>
+Browsers:
+    &gt; sudo pacman -S firefox qutebrowser pdfjs npm
+
+<li>
+Cloud storage:
+    &gt; yay -S onedrive-abraunegg dropbox
+
+<li>
+Notification and calendar:
+    &gt; sudo pacman -S mako zenity
+
+<li>
+Image, music and video player:
+    &gt; sudo pacman -S imv mpc mpv youtube-dl mpd ncmpcpp<br>
+    &gt; systemctl --user enable mpd.service<br>
+    &gt; systemctl --user start mpd.service
+
+<li>
+Simple calculator:
+    &gt; qalculate-gtk
+
+<li>
+Powershell
+    &gt; yay -S powershell-bin
+
+<li>
+Theme:
+    &gt; sudo pacman -S adapta-gtk-theme lxappearance
+    &gt; yay -S la-capitaine-icon-theme nwg-look
+
+<li>
+TUI Typing Speed Tester:
+    &gt; yay -S typioca-git
+
+</ul>
+
+
+
+<p>
+## Screen Sharing with Chromium
+</p>
+<ul>
+<li>
+For online meeting purposes, screen sharing is important:
+    &gt; sudo pacman -S chromium libpipewire02 pipewire pipewire-media-session xdg-desktop-portal-wlr
+
+<li>
+Ensure that the following environment variables are set:
+
+</ul>
+<blockquote>
+XDG_CURRENT_DESKTOP=sway
+XDG_SESSION_TYPE=wayland
+</blockquote>
+<ul>
+<li>
+Change WebRTC Pipewire support to enabled in Chromium flags:
+
+<ul>
+<li>
+Type the following in Chromium URL bar:
+        &gt; chrome://flags
+
+<li>
+Search for WebRTC Pipewire and enable it:
+        ![WebRTC.](./chromium.png "WebRTC.")
+
+</ul>
+</ul>
+        
+
+<p>
+## Raw Disk Access (Windows Partition) with VirtualBox:
+</p>
+<ul>
+<li>
+Ensure that xwayland is enabled in Sway config file:
+
+</ul>
+<blockquote>
+...
+xwayland enable
+...
+</blockquote>
+
+<ul>
+<li>
+Install VirtualBox:
+    &gt; sudo pacman -S virtualbox
+
+<li>
+Create image file using current windows partition:
+    &gt; VBoxManage internalcommands createrawvmdk -filename /home/chew/Documents/9_VirtualBox/win11.vmdk -rawdisk /dev/nvme0n1 -partitions 1,2,3 -relative
+
+</ul>
+    
+
+<p>
+## Matlab
+### Installation
+</p>
+<ul>
+<li>
+Mount ISO file and install using input file:
+    &gt; sudo mount -o loop /home/chew/R2021a/Matlab.iso ~/mnt/<br>
+    &gt; cd /home/chew/mnt/<br>
+    &gt; sudo bash ./install -v -inputFile /home/chew/matlab_input.txt -agreeToLicense yes
+
+</ul>
+<blockquote>
+fileInstallationKey=xxxxx-xxxxx-xxxxx-xxxxx-xxxxx-xxxxx
+</blockquote>
+<blockquote>
+#product.Computer_Vision_System_Toolbox
+#product.Control_System_Toolbox
+...
+</blockquote>
+
+<ul>
+<li>
+To insert license file during first time launching Matlab, I logged into X
+  (instead of Wayland) for this. I am using X for presentation as well, as
+  output mirroring is more convenient for me during presentation.
+
+</ul>
+
+<ul>
+<li>
+Install the following if Matlab is not running (some may not be needed):
+    &gt; sudo pacman -S jre8-openjdk jdk8-openjdk jre8-openjdk-headless
+    &gt; yay -S libselinux
+
+</ul>
+
+<p>
+### Unable to launch MATLABWindow application
+</p>
+<ul>
+<li>
+Run the following commands in Matlab:
+    &gt; cd(matlabroot)
+    &gt; ! bin/glnxa64/MATLABWindow
+
+</ul>
+<blockquote>
+bin/glnxa64/MATLABWindow: symbol lookup error: /usr/lib/libcairo.so.2: undefined symbol: FT_Get_Color_Glyph_Layer
+</blockquote>
+        
+<ul>
+<li>
+Move libfreetype.so.6 to another folder:
+    &gt; cd /usr/local/Polyspace/R2021a/bin/glnxa64/<br>
+    &gt; sudo mkdir exclude<br>
+    &gt; sudo mv ./libfreetype.so.6* ./exclude
+
+</ul>
+
+<ul>
+<li>
+Doing this solved my issue of not able to launch live script as well.
+
+<ul>
+<li>
+Not currently supported by this operating system configuration (see
+      [here](<a href="https://wiki.archlinux.org/title/MATLAB#LiveScript_errors)">https://wiki.archlinux.org/title/MATLAB#LiveScript_errors)</a> for more details):
+    &lt;!---
+        ![Not supported.](./matlab_livescript.png "Matlab live script error")
+    ---&gt;
+
+</ul>
+</ul>
+
+<ul>
+<li>
+See
+  [1](<a href="https://es.mathworks.com/matlabcentral/answers/364551-why-is-matlab-unable-to-run-the-matlabwindow-application-on-linux),">https://es.mathworks.com/matlabcentral/answers/364551-why-is-matlab-unable-to-run-the-matlabwindow-application-on-linux),</a>
+  [2](<a href="https://www.reddit.com/r/archlinux/comments/tkas9q/matlab_stopped_working_after_system_update/)">https://www.reddit.com/r/archlinux/comments/tkas9q/matlab_stopped_working_after_system_update/)</a>
+  and
+  [3](<a href="https://wiki.archlinux.org/title/MATLAB#Unable_to_launch_the_MATLABWindow_application)">https://wiki.archlinux.org/title/MATLAB#Unable_to_launch_the_MATLABWindow_application)</a>
+  for more details.
+
+<li>
+In my case, the following was solve by
+
+</ul>
+<blockquote>
+error while loading shared libraries: libcrypt.so.1: cannot open shared object file: No such file or directory
+</blockquote>
+<blockquote>
+&gt; sudo pacman -S libxcrypt-compat
+</blockquote>
+
+
+<p>
+## Zsh and Oh My Zsh
+### Zsh
+</p>
+<ul>
+<li>
+Install zsh:
+    &gt; sudo pacman -S zsh
+
+<li>
+Change default shell to zsh:
+    &gt; chsh -l
+
+</ul>
+<blockquote>
+/bin/sh
+/bin/bash
+/usr/bin/git-shell
+/usr/bin/pwsh
+/bin/zsh
+/usr/bin/zsh
+</blockquote>
+<blockquote>
+&gt; chsh -s /usr/bin/zsh
+</blockquote>
+<blockquote>
+Changing shell for chew.
+Password:
+Shell changed.
+</blockquote>
+<ul>
+<li>
+Zsh configuration
+    &gt; autoload -Uz zsh-newuser-install
+    &gt; zsh-newuser-install -f
+
+<li>
+Logout and login again
+
+</ul>
+
+<p>
+### Oh My Zsh
+</p>
+<ul>
+<li>
+Install Oh My Zsh and recommended font:
+    &gt; yay -S oh-my-zsh-git ttf-meslo-nerd-font-powerlevel10k
+
+<li>
+Install theme powerlevel10k:
+    &gt; sudo pacman -S zsh-theme-powerlevel10k
+
+<li>
+Copy oh-my-zsh folder to home:
+    &gt; cp -r /usr/share/oh-my-zsh /home/chew/.oh-my-zsh
+
+<li>
+Theme configuration:
+    &gt; nvim ~/.zshrc
+
+</ul>
+<blockquote>
+...
+export ZSH="/home/chew/.oh-my-zsh"
+source $ZSH/oh-my-zsh.sh
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+...
+</blockquote>
+
+<ul>
+<li>
+Start terminal and begin configuration of powerlevel10k theme.
+
+<li>
+Move the line 'bindkey -v' in .zshrc to last line (to ensure vim-like keybind
+  is not overwritten by other plugins/themes).
+
+</ul>
+
+<p>
+## XMonad
+</p>
+<ul>
+<li>
+Install clipboard, picom, notification, lock-screen
+    &gt; sudo pacman -S xclip picom dunst i3lock
+
+<li>
+Install cava
+    &gt; yay -S cava
+
+</ul>
+
+<p>
+## MX Master 3 - Logiops
+### Installation
+</p>
+<ul>
+<li>
+Install logiops:
+    &gt; yay -S logiops
+
+<li>
+Enable logid.service:
+    &gt; systemctl enable logid.service
+    &gt; systemctl start logid.service
+
+</ul>
+
+<p>
+### Configuration 
+</p>
+<ul>
+<li>
+Edit (or create) /etc/logid.cfg
+
+<li>
+Get device name:
+    &gt; sudo logid -v
+
+</ul>
+<blockquote>
+...
+[INFO] Detected receiver at /dev/hidraw10
+[DEBUG] Unsupported device /dev/hidraw8 ignored
+[DEBUG] Unsupported device /dev/hidraw4 ignored
+[DEBUG] Unsupported device /dev/hidraw0 ignored
+[INFO] Detected receiver at /dev/hidraw3
+[INFO] Device Wireless Mouse MX Master 3 not configured, using default config.
+[INFO] Device found: Wireless Mouse MX Master 3 on /dev/hidraw10:1
+[DEBUG] /dev/hidraw10:1 remappable buttons:
+...
+</blockquote>
+
+<p>
+### Note
+</p>
+<ul>
+<li>
+In my case of connecting laptop to docking station with lid closed, every time I exit SwayWM, the external monitor goes off as well. To deal with this:
+    &gt; sudo nvim /etc/systemd/logind.conf
+
+</ul>
+<blockquote>
+[Login]
+...
+HandleLidSwitch=ignore
+...
+</blockquote>
+
+		</div>
+	</body>
+</html>
